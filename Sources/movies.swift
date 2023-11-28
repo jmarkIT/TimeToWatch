@@ -10,6 +10,3 @@ struct Movie:Codable {
     var title: String
     var length: Int
 }
-
-
-

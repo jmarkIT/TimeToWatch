@@ -27,7 +27,7 @@ struct Add: ParsableCommand {
     func run() {
         let newMovie = Movie(title: title, length: length)
         
-        var movies = readDB(from: file)
+        var movies = readDB(from: file) ?? []
         movies.append(newMovie)
         writeDB(to: file, with: movies)
         print("Added \(newMovie.title) to list")
@@ -36,7 +36,10 @@ struct Add: ParsableCommand {
 
 struct List: ParsableCommand {
     func run() {
-        let movies = readDB(from: file)
+        guard let movies = readDB(from: file) else {
+            print("Movie database (\"movies.json\") not found in Documents folder. Please try adding a movie first!")
+            return
+        }
         for movie in movies {
             print("\(movie.title): \(movie.length) minutes")
         }
@@ -48,7 +51,7 @@ struct Watch: ParsableCommand {
     var minutes: Int
     
     func run() {
-        let movies = readDB(from: file)
+        let movies = readDB(from: file) ?? []
         let choices = movies.filter({ minutes >= $0.length })
         for movie in choices {
             print("\(movie.title): \(movie.length) minutes")

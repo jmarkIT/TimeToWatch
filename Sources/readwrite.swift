@@ -7,20 +7,20 @@
 
 import Foundation
 
-func readDB(from DBURL: String) -> [Movie] {
+func readDB(from DBURL: String) -> [Movie]? {
     let fileManager = FileManager.default
 
     let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
     let moviesDBURL = documentsURL.appendingPathComponent(DBURL)
     
-    var moviesData: [Movie] = []
+    var moviesData: [Movie]? = []
     
     do {
         let jsonData = try Data(contentsOf: moviesDBURL)
         let jsonDecoder = JSONDecoder()
         moviesData = try jsonDecoder.decode([Movie].self, from: jsonData)
     } catch {
-        print("Error decoding data: \(error)")
+        moviesData = nil
     }
     
     return moviesData

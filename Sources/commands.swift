@@ -49,3 +49,18 @@ struct Watch: ParsableCommand {
         }
     }
 }
+
+struct Remove: ParsableCommand {
+    @Argument(help: "The title of the film you would like to remove from list.")
+    var title: String
+    
+    func run() {
+        guard var movies = readDB(from: file) else {
+            print("No movies found, so no action is taken")
+            return
+        }
+        movies = movies.filter({ $0.title != title })
+        writeDB(to: file, with: movies)
+        print("Removing all instances of \(title) from your list.")
+    }
+}

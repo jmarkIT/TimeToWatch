@@ -4,7 +4,6 @@
 //
 //  Created by James Mark on 11/27/23.
 //
-
 import ArgumentParser
 
 struct Options: ParsableArguments {
@@ -23,7 +22,7 @@ extension TimeToWatch {
         func run() {
             let newMovie = Movie(title: title, length: length)
             
-            var movies = readDB(from: file) ?? []
+            var movies = readDB() ?? []
             movies.append(newMovie)
             writeDB(to: file, with: movies)
             print("Added \(newMovie.title) to list")
@@ -33,10 +32,10 @@ extension TimeToWatch {
     struct List: ParsableCommand {
         static var configuration = CommandConfiguration(abstract: "Print out list of movies")
         
-        @OptionGroup var options: Options
+//        @OptionGroup var options: Options
         
         func run() {
-            guard let movies = readDB(from: options.file) else {
+            guard let movies = readDB() else {
                 print("Movie database (\"movies.json\") not found in Documents folder. Please try adding a movie first!")
                 return
             }
@@ -51,7 +50,7 @@ extension TimeToWatch {
         var minutes: Int
         
         func run() {
-            let movies = readDB(from: file) ?? []
+            let movies = readDB() ?? []
             let choices = movies.filter({ minutes >= $0.length })
             for movie in choices {
                 print("\(movie.title): \(movie.length) minutes")
@@ -64,7 +63,7 @@ extension TimeToWatch {
         var title: String
         
         func run() {
-            guard var movies = readDB(from: file) else {
+            guard var movies = readDB() else {
                 print("No movies found, so no action is taken")
                 return
             }

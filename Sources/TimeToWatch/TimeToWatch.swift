@@ -2,8 +2,6 @@
 // https://docs.swift.org/swift-book
 import ArgumentParser
 
-let file: String = "movies.json"
-
 @main
 struct TimeToWatch: ParsableCommand {
     static var configuration = CommandConfiguration(

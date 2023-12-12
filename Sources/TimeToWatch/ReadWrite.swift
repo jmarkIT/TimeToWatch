@@ -22,17 +22,15 @@ func readDB() -> [Movie]? {
     return moviesData
 }
 
-func writeDB(to DBURL: String, with movies: [Movie]) -> () {
+func writeDB(with movies: [Movie]) -> () {
     let fileManager = FileManager.default
     
-    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let moviesDBURL = documentsURL.appendingPathComponent(DBURL)
-    
+    let fileURL = URL(string: "file://\(fileManager.currentDirectoryPath)")?.appendingPathComponent("TimeToWatch.json")
     do {
         let jsonEncoder = JSONEncoder()
         let jsonData = try jsonEncoder.encode(movies)
         
-        try jsonData.write(to: moviesDBURL)
+        try jsonData.write(to: fileURL!)
     } catch {
         print("Error decoding data: \(error)")
     }

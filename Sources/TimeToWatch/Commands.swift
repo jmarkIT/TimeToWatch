@@ -19,7 +19,6 @@ extension TimeToWatch {
             
             var movies = readDB() ?? []
             movies.append(newMovie)
-//            writeDB(to: file, with: movies)
             writeDB(with: movies)
             print("Added \(newMovie.title) to list")
         }

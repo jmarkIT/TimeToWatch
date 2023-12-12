@@ -11,8 +11,8 @@ struct TimeToWatch: ParsableCommand {
         
         version: "0.0.1",
         
-        subcommands: [Add.self, List.self, Watch.self, Remove.self]
+        subcommands: [Add.self, List.self, Watch.self, Remove.self],
         
-//        defaultSubcommand: List.self
+        defaultSubcommand: List.self
     )
 }

@@ -22,7 +22,6 @@ func readDB(from DBURL: String) -> [Movie]? {
     } catch {
         moviesData = nil
     }
-    
     return moviesData
 }
 
@@ -40,5 +39,4 @@ func writeDB(to DBURL: String, with movies: [Movie]) -> () {
     } catch {
         print("Error decoding data: \(error)")
     }
-    
 }

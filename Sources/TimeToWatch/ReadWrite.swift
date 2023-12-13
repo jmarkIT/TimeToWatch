@@ -7,6 +7,16 @@
 
 import Foundation
 
+func checkDB() -> Bool {
+    let fileManager = FileManager.default
+    return fileManager.fileExists(atPath: "TimeToWatch.json")
+}
+
+func createDB() -> () {
+    let fileManager = FileManager.default
+    fileManager.createFile(atPath: "TimeToWatch.json", contents: nil)
+}
+
 func readDB() -> [Movie]? {
     let fileManager = FileManager.default
     let fileURL = URL(string: "file://\(fileManager.currentDirectoryPath)")?.appendingPathComponent("TimeToWatch.json")

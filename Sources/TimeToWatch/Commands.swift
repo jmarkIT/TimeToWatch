@@ -7,6 +7,18 @@
 import ArgumentParser
 
 extension TimeToWatch {
+    struct Create: ParsableCommand {
+        func run() {
+            let DBStatus = checkDB()
+            if DBStatus {
+                print("Database already exists, please use another command")
+            } else {
+                createDB()
+                print("Database created!")
+            }
+        }
+    }
+    
     struct Add: ParsableCommand {
         @Argument(help: "Title of the movie to add.")
         var title: String

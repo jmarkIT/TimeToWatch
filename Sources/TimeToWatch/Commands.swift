@@ -9,7 +9,9 @@ import Foundation
 
 extension TimeToWatch {
     struct Create: ParsableCommand {
+        static var configuration = CommandConfiguration(abstract: "Create new database in current directory")
         func run() {
+
             let DBStatus = checkDB()
             guard !DBStatus else {
                 print("Database already exists, please use another command")
@@ -28,6 +30,7 @@ extension TimeToWatch {
     }
     
     struct Add: ParsableCommand {
+        static var configuration = CommandConfiguration(abstract: "Add a movie to the database")
         @Argument(help: "Title of the movie to add.")
         var title: String
         
@@ -50,7 +53,6 @@ extension TimeToWatch {
 
     struct List: ParsableCommand {
         static var configuration = CommandConfiguration(abstract: "Print out list of movies")
-        
         func run() {
             guard let movies = readDB() else {
                 print("Movie database (\"TimeToWatch.json\") not found in your current folder. Please try adding a movie first!")
@@ -63,6 +65,7 @@ extension TimeToWatch {
     }
 
     struct Watch: ParsableCommand {
+        static var configuration = CommandConfiguration(abstract: "Display the movies you can watch in the time you have")
         @Argument(help: "How much time, in minutes, you have available.")
         var minutes: Int
         
@@ -80,6 +83,7 @@ extension TimeToWatch {
     }
 
     struct Remove: ParsableCommand {
+        static var configuration = CommandConfiguration(abstract: "Remove a movie from the database")
         @Argument(help: "The title of the film you would like to remove from list.")
         var title: String
         

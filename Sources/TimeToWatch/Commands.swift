@@ -27,6 +27,10 @@ extension TimeToWatch {
         var length: Int
         
         func run() {
+            guard checkDB() else {
+                print("Movie database (\"TimeToWatch.json\") not found in your current folder. Please run create first!")
+                return
+            }
             let newMovie = Movie(title: title, length: length)
             
             var movies = readDB() ?? []

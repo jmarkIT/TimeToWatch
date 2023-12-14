@@ -18,7 +18,7 @@ extension TimeToWatch {
                 return
             }
             let fileManager = FileManager.default
-            print("You are currently at \(fileManager.currentDirectoryPath). Create database here?y/N")
+            print("You are currently at \(fileManager.currentDirectoryPath). Create database here? y/N")
             let answer = readLine()
             if answer?.lowercased() == "y" {
                 createDB()

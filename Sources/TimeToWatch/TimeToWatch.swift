@@ -7,7 +7,7 @@ struct TimeToWatch: ParsableCommand {
     static var configuration = CommandConfiguration(
         abstract: "Find out what movie you can watch with what time you have.",
         
-        version: "0.0.1",
+        version: "1.0.0",
         
         subcommands: [Create.self, Add.self, List.self, Watch.self, Remove.self],
         

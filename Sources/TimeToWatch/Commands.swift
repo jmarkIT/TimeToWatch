@@ -5,16 +5,24 @@
 //  Created by James Mark on 11/27/23.
 //
 import ArgumentParser
+import Foundation
 
 extension TimeToWatch {
     struct Create: ParsableCommand {
         func run() {
             let DBStatus = checkDB()
-            if DBStatus {
+            guard !DBStatus else {
                 print("Database already exists, please use another command")
-            } else {
+                return
+            }
+            let fileManager = FileManager.default
+            print("You are currently at \(fileManager.currentDirectoryPath). Create database here?y/N")
+            let answer = readLine()
+            if answer?.lowercased() == "y" {
                 createDB()
                 print("Database created!")
+            } else {
+                print("Not creating database")
             }
         }
     }
@@ -27,6 +35,10 @@ extension TimeToWatch {
         var length: Int
         
         func run() {
+            guard checkDB() else {
+                print("Movie database (\"TimeToWatch.json\") not found in your current folder. Please run create first!")
+                return
+            }
             let newMovie = Movie(title: title, length: length)
             
             var movies = readDB() ?? []
@@ -55,6 +67,10 @@ extension TimeToWatch {
         var minutes: Int
         
         func run() {
+            guard checkDB() else {
+                print("No database found in the current directory. Are you sure you're in the right place?")
+                return
+            }
             let movies = readDB() ?? []
             let choices = movies.filter({ minutes >= $0.length })
             for movie in choices {
@@ -68,6 +84,10 @@ extension TimeToWatch {
         var title: String
         
         func run() {
+            guard checkDB() else {
+                print("No database found in the current directory. Are you sure you're in the right place?")
+                return
+            }
             guard var movies = readDB() else {
                 print("No movies found, so no action is taken")
                 return

@@ -72,6 +72,10 @@ extension TimeToWatch {
         var title: String
         
         func run() {
+            guard checkDB() else {
+                print("No database found in the current directory. Are you sure you're in the right place?")
+                return
+            }
             guard var movies = readDB() else {
                 print("No movies found, so no action is taken")
                 return

@@ -5,16 +5,24 @@
 //  Created by James Mark on 11/27/23.
 //
 import ArgumentParser
+import Foundation
 
 extension TimeToWatch {
     struct Create: ParsableCommand {
         func run() {
             let DBStatus = checkDB()
-            if DBStatus {
+            guard !DBStatus else {
                 print("Database already exists, please use another command")
-            } else {
+                return
+            }
+            let fileManager = FileManager.default
+            print("You are currently at \(fileManager.currentDirectoryPath). Create database here?y/N")
+            let answer = readLine()
+            if answer?.lowercased() == "y" {
                 createDB()
                 print("Database created!")
+            } else {
+                print("Not creating database")
             }
         }
     }
@@ -59,6 +67,10 @@ extension TimeToWatch {
         var minutes: Int
         
         func run() {
+            guard checkDB() else {
+                print("No database found in the current directory. Are you sure you're in the right place?")
+                return
+            }
             let movies = readDB() ?? []
             let choices = movies.filter({ minutes >= $0.length })
             for movie in choices {
